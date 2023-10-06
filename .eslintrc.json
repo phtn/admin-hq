@@ -1,3 +1,81 @@
 {
-  "extends": "next/core-web-vitals"
+	"env": {
+		"es6": true
+	},
+	"extends": [
+		"plugin:react/recommended",
+		// "plugin:@typescript-eslint/recommended",
+		// "airbnb",
+		"plugin:import/errors",
+		"plugin:import/warnings",
+		"plugin:import/typescript",
+		// "prettier",
+		"next/core-web-vitals"
+	],
+	"globals": {
+		"Atomics": "readonly",
+		"SharedArrayBuffer": "readonly",
+		"__DEV__": "readonly",
+		"JSX": true
+	},
+	// "parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaVersion": "latest",
+		"sourceType": "module",
+		"allowImportExportEverywhere": true
+	},
+	"plugins": ["react"],
+	"rules": {
+		"prettier/prettier": "error",
+		"spaced-comment": ["error", "always", { "markers": ["/"] }],
+		"import/prefer-default-export": "off",
+		"class-methods-use-this": "off",
+		"no-console": ["warn", { "allow": ["tron"] }],
+		"no-unused-expressions": "error",
+		"no-unused-vars": "error",
+		"no-bitwise": ["off", { "int32Hint": true }],
+
+		// TypeScript
+		"@typescript-eslint/no-non-null-assertion": "off",
+		"@typescript-eslint/explicit-function-return-type": "off",
+		"@typescript-eslint/no-unused-expressions": "error",
+
+		// React
+		"react/function-component-definition": [
+			1,
+			{ "namedComponents": "arrow-function" }
+		],
+		"react/jsx-props-no-spreading": "off",
+		"react/jsx-filename-extension": [
+			"warn",
+			{
+				"extensions": [".js", ".jsx", ".ts", ".tsx"]
+			}
+		],
+		"react/prop-types": "off",
+		"react/react-in-jsx-scope": "off",
+
+		// React Hooks
+		"react-hooks/rules-of-hooks": "error",
+		"react-hooks/exhaustive-deps": "warn",
+
+		"import/extensions": [
+			"error",
+			"ignorePackages",
+			{
+				"js": "never",
+				"jsx": "never",
+				"ts": "never",
+				"tsx": "never"
+			}
+		]
+	},
+	"settings": {
+		"import/resolver": {
+			"node": {
+				"paths": ["./src"]
+			}
+			// "babel-module": {}
+		}
+	}
 }

@@ -1,5 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
+import { LayoutGridIcon } from 'lucide-react'
 
 export function User() {
 	return <SignIn />
@@ -19,10 +20,12 @@ const Profile = () => {
 
 const SignIn = () => {
 	return (
-		<Button
-			variant='ghost'
-			size='sm'>
-			Sign in
-		</Button>
+		<div className='w-20 justify-end flex'>
+			<Button
+				variant='ghost'
+				size='icon'>
+				<LayoutGridIcon className='stroke-[1px]' />
+			</Button>
+		</div>
 	)
 }

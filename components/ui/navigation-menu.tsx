@@ -40,7 +40,7 @@ NavigationMenuList.displayName = NavigationMenuPrimitive.List.displayName
 const NavigationMenuItem = NavigationMenuPrimitive.Item
 
 const navigationMenuTriggerStyle = cva(
-	'group inline-flex h-10 w-max mx-2 items-center rounded-md justify-center px-4 py-2 text-xs text-stone-800 font-normal tracking-wide transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent data-[active]:bg-accent data-[state=open]:bg-accent data-[state=open]:text-accent-foreground'
+	'group inline-flex h-10 w-max mx-2 items-center justify-center px-4 py-2 text-xs text-stone-800 font-normal tracking-wide transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent data-[active]:bg-accent data-[state=open]:bg-accent data-[state=open]:text-accent-foreground'
 )
 
 const NavigationMenuTrigger = React.forwardRef<
@@ -53,7 +53,7 @@ const NavigationMenuTrigger = React.forwardRef<
 		{...props}>
 		{children}{' '}
 		<Circle
-			className='relative top-[1px] ml-[4px] h-3 w-3 mb-[3.25px] text-[#297EA6] fill-[#297EA6] transition scale-0 group-data-[state=open]:scale-75 duration-200 group-data-[state=open]:rotate-180'
+			className='relative top-[2px] ml-[4px] h-3 w-3 mb-[3.25px] text-[#297EA6] fill-[#297EA6] transition scale-0 group-data-[state=open]:scale-75 duration-200 group-data-[state=open]:rotate-180'
 			aria-hidden='true'
 		/>
 	</NavigationMenuPrimitive.Trigger>
@@ -84,7 +84,7 @@ const NavigationMenuViewport = React.forwardRef<
 	<div className={cn('absolute left-0 top-full flex justify-center')}>
 		<NavigationMenuPrimitive.Viewport
 			className={cn(
-				'origin-top-center relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 md:w-[var(--radix-navigation-menu-viewport-width)]',
+				'origin-top-center relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden border-[0.33px] border-stone-500 bg-popover text-popover-foreground shadow-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-0 data-[state=open]:zoom-in-90 md:w-[var(--radix-navigation-menu-viewport-width)]',
 				className
 			)}
 			ref={ref}

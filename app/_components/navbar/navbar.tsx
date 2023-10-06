@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/navigation-menu'
 import { BrandContainer, Container, MenubarContainer } from './styled'
 import Lottie from 'react-lottie'
-import animationData from '../../../public/lotties/logo.json'
+import animationData from '../../../public/lotties/dark-logo.json'
 import { User } from '../user/user'
 import { GanttChartSquare, Users } from 'lucide-react'
 
@@ -69,13 +69,14 @@ const Brand = () => {
 			<Lottie
 				style={{ height: 64, width: 64 }}
 				options={defaultOptions}
+				speed={0.5}
 			/>
-			<span className='font-extrabold text-stone-800 mr-4 tracking-tighter'>
+			{/* <span className='font-extrabold text-stone-800 mr-4 tracking-tighter'>
 				HQ
-			</span>
-			<span className='text-xs tracking-wider font-light bg-stone-800/5 px-2 py-1 '>
+			</span> */}
+			{/* <span className='text-xs tracking-wider font-light bg-stone-800/5 px-2 py-1 '>
 				Outsourcee
-			</span>
+			</span> */}
 		</BrandContainer>
 	)
 }
@@ -86,7 +87,7 @@ const Menubar = () => (
 			<NavigationMenuList>
 				<NavigationMenuItem>
 					<NavigationMenuTrigger>
-						<Users className='w-4 mr-2 text-stone-800 stroke-[1.5px]' />
+						<Users className='w-4 mr-2 text-stone-800 stroke-[1.5px] fill-stone-400/50' />
 						Users
 					</NavigationMenuTrigger>
 					<NavigationMenuContent>
@@ -124,7 +125,7 @@ const Menubar = () => (
 				</NavigationMenuItem>
 				<NavigationMenuItem>
 					<NavigationMenuTrigger>
-						<GanttChartSquare className='w-4 mr-2 text-[#297EA6] stroke-[1.5px]' />
+						<GanttChartSquare className='w-4 mr-2 text-stone-800 stroke-[1.5px] fill-stone-400/50' />
 						Accounts
 					</NavigationMenuTrigger>
 					<NavigationMenuContent>
