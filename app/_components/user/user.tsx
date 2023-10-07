@@ -20,7 +20,7 @@ const Profile = () => {
 
 const SignIn = () => {
 	return (
-		<div className='w-20 justify-end flex'>
+		<div className='w-64 justify-end flex'>
 			<Button
 				variant='ghost'
 				size='icon'>

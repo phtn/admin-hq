@@ -12,7 +12,7 @@ import { Input } from '@/components/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { GreenCheck, OrbLoader, SmallLoader } from '../lotties/lotties'
+import { GreenCheck, SmallLoader } from '../lotties/lotties'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { GlobalContext } from '@/app/page'
 import { GlobalCtx } from '@/app/types'
@@ -20,6 +20,7 @@ import { toast } from 'sonner'
 import { map } from '@/app/_utils/helpers'
 import { authenticator } from './authenticator'
 import { type User } from 'firebase/auth'
+import { MapPinIcon } from 'lucide-react'
 
 const formSchema = z.object({
 	email: z.string().email().min(1, {
@@ -46,13 +47,20 @@ export function SignInForm() {
 	})
 
 	function onSubmit(values: z.infer<typeof formSchema>) {
+		setLoading(true)
 		const onError = (error: Error) => {
-			setError(error as Error)
+			// setError(error as Error)
+			toast(<span>{error.message}</span>)
 		}
-		const onSuccess = (value: User | Error) => {
-			console.log(value as User)
+		const onResult = (value: User | Error) => {
+			if (Object.values(value)[2] === 'FirebaseError') {
+				toast(<span>unathorized</span>)
+			} else {
+				toast(<span>Successful login</span>)
+				setLoading(false)
+			}
 		}
-		authenticator(values).then(onSuccess).catch(onError)
+		authenticator(values).then(onResult)
 	}
 
 	useEffect(() => {
@@ -69,9 +77,15 @@ export function SignInForm() {
 
 	useEffect(
 		function getCity() {
-			toast(<span className='font-bold'>{userCity}</span>, {
-				description: 'desc',
-			})
+			toast(
+				<div className='flex items-center'>
+					<MapPinIcon className='mr-3 h-4 stroke-[1px]' />
+					<span className='font-bold'>{userCity}</span>
+				</div>,
+				{
+					description: <span>desc</span>,
+				}
+			)
 		},
 		[userCity]
 	)
@@ -108,6 +122,7 @@ export function SignInForm() {
 											<Input
 												placeholder='User ID'
 												{...field}
+												type='email'
 											/>
 										</FormControl>
 										<FormMessage />
@@ -127,11 +142,11 @@ export function SignInForm() {
 												type='password'
 											/>
 										</FormControl>
-
 										<FormMessage />
 									</FormItem>
 								)}
 							/>
+
 							<Button
 								disabled={loading}
 								type='submit'

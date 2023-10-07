@@ -17,7 +17,8 @@ import { BrandContainer, Container, MenubarContainer } from './styled'
 import Lottie from 'react-lottie'
 import animationData from '../../../public/lotties/dark-logo.json'
 import { User } from '../user/user'
-import { GanttChartSquare, Users } from 'lucide-react'
+import { GanttChartSquare, GemIcon, Users } from 'lucide-react'
+import Image from 'next/image'
 
 const components: { title: string; href: string; description: string }[] = [
 	{
@@ -71,12 +72,15 @@ const Brand = () => {
 				options={defaultOptions}
 				speed={0.5}
 			/>
-			{/* <span className='font-extrabold text-stone-800 mr-4 tracking-tighter'>
-				HQ
-			</span> */}
-			{/* <span className='text-xs tracking-wider font-light bg-stone-800/5 px-2 py-1 '>
-				Outsourcee
-			</span> */}
+			<Link href={'/'}>
+				<Image
+					alt='comptrolla logo'
+					src={'/images/wide.png'}
+					width={200}
+					height={200}
+					className='h-auto w-28'
+				/>
+			</Link>
 		</BrandContainer>
 	)
 }
@@ -87,8 +91,8 @@ const Menubar = () => (
 			<NavigationMenuList>
 				<NavigationMenuItem>
 					<NavigationMenuTrigger>
-						<Users className='w-4 mr-2 text-stone-800 stroke-[1.5px] fill-stone-400/50' />
-						Users
+						<GemIcon className='w-4 mr-2 text-stone-800 stroke-[1.5px] fill-stone-400/50' />
+						Sales
 					</NavigationMenuTrigger>
 					<NavigationMenuContent>
 						<ul className='grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]'>
@@ -126,7 +130,7 @@ const Menubar = () => (
 				<NavigationMenuItem>
 					<NavigationMenuTrigger>
 						<GanttChartSquare className='w-4 mr-2 text-stone-800 stroke-[1.5px] fill-stone-400/50' />
-						Accounts
+						Activity
 					</NavigationMenuTrigger>
 					<NavigationMenuContent>
 						<ul className='grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] '>
@@ -143,11 +147,11 @@ const Menubar = () => (
 				</NavigationMenuItem>
 				<NavigationMenuItem>
 					<Link
-						href='/docs'
+						href='/settings'
 						legacyBehavior
 						passHref>
 						<NavigationMenuLink className={navigationMenuTriggerStyle()}>
-							Activity
+							Settings
 						</NavigationMenuLink>
 					</Link>
 				</NavigationMenuItem>

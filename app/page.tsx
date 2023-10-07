@@ -8,6 +8,7 @@ import { db } from '@/lib/db'
 import { useGeolocator } from './_utils/geolocator/geolocator'
 import { map } from './_utils/helpers'
 import { GlobalCtx } from './types'
+import { Homepage } from './_components/homepage/homepage'
 
 export const GlobalContext = createContext<GlobalCtx | null>(null)
 
@@ -20,8 +21,15 @@ export default function Home() {
 		if (user) setAuthState(true)
 	})
 
+	const handleSignOut = () => {
+		auth.signOut().then(() => {
+			setAuthState(false)
+		})
+		console.log('sign out pressed')
+	}
+
 	const Authenticator = useCallback(() => {
-		const gate = map(<span>Signed in</span>, <SignInForm />)
+		const gate = map(<Homepage />, <SignInForm />)
 		return <>{gate.get(authState)}</>
 	}, [authState])
 

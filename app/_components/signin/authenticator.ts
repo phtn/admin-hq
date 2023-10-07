@@ -21,7 +21,7 @@ const authenticator = async ({ email, password }: SignInProps) => {
 		return credential
 	}
 
-	return await signInWithEmailAndPassword(auth, email, password)
+	return signInWithEmailAndPassword(auth, email, password)
 		.then(onSuccess)
 		.catch(onError)
 }

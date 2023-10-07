@@ -1,11 +1,9 @@
 import tw from 'tailwind-styled-components'
 
 const BrandContainer = tw.div`
-  w-20
+  w-64
   flex
   items-center
-  border-r-stone-800
-  border-r-[0.33px]
 `
 
 const Container = tw.div`
