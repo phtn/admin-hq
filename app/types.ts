@@ -15,6 +15,13 @@ type IdValuePair = {
 	value: string
 }
 
+type Log = {
+	createdAt: number
+	type: string
+	user: string
+	value: string
+}
+
 interface AdminConfig {
 	admins: string[]
 	businessSizes: IdValuePair[]
@@ -24,6 +31,7 @@ interface AdminConfig {
 	revenueRanges: IdValuePair[]
 	taxRegTypes: IdValuePair[]
 	serviceLocation: IdValuePair[]
+	logs: Log[]
 }
 
 export type { GlobalCtx, AdminConfig }

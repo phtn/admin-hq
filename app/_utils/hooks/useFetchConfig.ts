@@ -29,14 +29,11 @@ const useFetchConfig = () => {
 	}
 
 	useEffect(() => {
-		setConfigLoading(true)
-
 		const docRef = doc(db, collectionPath, docId)
 
-		const unsub = getDoc(docRef).then(Ok, Err)
-		return () => {
-			unsub
-		}
+		setConfigLoading(true)
+
+		getDoc(docRef).then(Ok, Err)
 	}, [])
 
 	return { config, configError, configLoading }

@@ -39,7 +39,7 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
 			<div className='md:hidden'></div>
 			<div className='hidden space-y-0 md:block'>
 				<div className='space-y-0.5 flex items-center my-4 mx-[26px]'>
-					<SettingsIcon className='h-[18px] text-stone-400 fill-stone-100' />
+					<SettingsIcon className='h-[18px] text-stone-500 fill-stone-100' />
 					<h2 className='text-lg font-bold tracking-tight mx-3'>Settings</h2>
 				</div>
 				<Separator className='' />
