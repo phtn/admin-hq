@@ -19,6 +19,7 @@ import animationData from '../../../public/lotties/dark-logo.json'
 import { MobileMenu } from '../menu/mobileMenu'
 import { GanttChartSquare, GemIcon, Users } from 'lucide-react'
 import Image from 'next/image'
+import { Tesseract } from '../lotties/lotties'
 
 const components: { title: string; href: string; description: string }[] = [
 	{
@@ -58,20 +59,10 @@ const components: { title: string; href: string; description: string }[] = [
 	},
 ]
 
-const defaultOptions = {
-	loop: true,
-	autoplay: true,
-	animationData: animationData,
-}
-
 const Brand = () => {
 	return (
 		<BrandContainer>
-			<Lottie
-				style={{ height: 64, width: 64 }}
-				options={defaultOptions}
-				speed={0.5}
-			/>
+			<Tesseract loop />
 			<Link href={'/'}>
 				<Image
 					alt='comptrolla logo'

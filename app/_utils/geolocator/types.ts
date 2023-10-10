@@ -72,4 +72,14 @@ type Coordinates = {
 	longitude: number
 }
 
-export type { ReverseGeocodeResult, Coordinates }
+type PinPoint = {
+	street: string
+	quarter: string
+	suburb: string
+	city: string
+	code: string
+	state: string
+	country: string
+}
+
+export type { ReverseGeocodeResult, Coordinates, PinPoint }

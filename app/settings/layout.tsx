@@ -38,13 +38,13 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
 		<ProtectedRoute>
 			<div className='md:hidden'></div>
 			<div className='hidden space-y-0 md:block'>
-				<div className='space-y-0.5 flex items-center my-4 mx-[26px]'>
-					<SettingsIcon className='h-[18px] text-stone-500 fill-stone-100' />
-					<h2 className='text-lg font-bold tracking-tight mx-3'>Settings</h2>
+				<div className='space-y-0.5 flex items-center my-4 mx-[20px]'>
+					<SettingsIcon className='h-[24px] text-stone-500 stroke-1' />
+					<h2 className='text-lg font-bold tracking-tight mx-4'>Settings</h2>
 				</div>
 				<Separator className='' />
 				<div className='flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0'>
-					<aside className='lg:w-1/5 border-r p-6'>
+					<aside className='lg:w-1/5 border-r'>
 						<SidebarNav items={sidebarNavItems} />
 					</aside>
 					<div className='flex-1 lg:max-w-2xl px-1 py-8 border-r pr-10'>

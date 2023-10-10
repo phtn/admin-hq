@@ -32,7 +32,7 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
 						pathname === item.href
 							? 'bg-muted hover:bg-muted font-bold'
 							: 'hover:bg-transparent hover:underline',
-						'justify-start pl-10'
+						'justify-start text-sm h-16'
 					)}>
 					{item.title}
 				</Link>

@@ -9,6 +9,7 @@ import { GlobalCtx } from './types'
 import { Homepage } from './_components/homepage/homepage'
 import useAuth from './_utils/hooks/useAuth'
 import { useFetchConfig } from './_utils/hooks/useFetchConfig'
+import ProtectedRoute from './_components/protectedRoutes'
 
 export const GlobalContext = createContext<GlobalCtx | null>(null)
 
@@ -49,7 +50,9 @@ export default function Home() {
 				<Blur />
 			</Backdrop>
 			<Body>
-				<Authenticator />
+				<ProtectedRoute>
+					<Authenticator />
+				</ProtectedRoute>
 			</Body>
 		</GlobalContext.Provider>
 	)

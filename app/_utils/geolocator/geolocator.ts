@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
-import { Coordinates, ReverseGeocodeResult } from './types'
+import { Coordinates, PinPoint, ReverseGeocodeResult } from './types'
 
 export function useGeolocator() {
 	const [geodata, setGeodata] = useState<ReverseGeocodeResult>()
@@ -10,6 +10,7 @@ export function useGeolocator() {
 	const [geodataError, setGeodataError] = useState<Error>()
 	const [geodataLoading, setGeodataLoading] = useState(false)
 	const [URL, setURL] = useState<string>('')
+	const [crosshair, setCrosshair] = useState<PinPoint>({} as PinPoint)
 
 	const onError = (error: Error) => {
 		setGeodataError(error)
@@ -46,7 +47,23 @@ export function useGeolocator() {
 		if (URL) axios(config).then(onSuccess).catch(onError)
 	}, [URL])
 
-	return { geodata, geodataError, geodataLoading, withCoords }
+	useEffect(() => {
+		if (geodata) {
+			const features = geodata.features[0].properties
+			const pinPoint: PinPoint = {
+				street: features.address_line1,
+				quarter: features.quarter,
+				suburb: features.suburb,
+				city: features.city,
+				code: features.postcode,
+				state: features.state,
+				country: features.country_code,
+			}
+			setCrosshair(pinPoint)
+		}
+	}, [geodata, URL])
+
+	return { geodata, geodataError, geodataLoading, withCoords, crosshair }
 }
 
 const getCoords = (): Promise<Coordinates> => {

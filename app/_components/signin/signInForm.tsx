@@ -28,7 +28,10 @@ const formSchema = z.object({
 		message: 'Username must be at least 2 characters.',
 	}),
 	password: z.string().min(4, {
-		message: 'Username must be at least 2 characters.',
+		message: 'Password required.',
+	}),
+	secret: z.string().min(4, {
+		message: 'Enter your secret key.',
 	}),
 })
 
@@ -45,6 +48,7 @@ export function SignInForm() {
 		defaultValues: {
 			email: '',
 			password: '',
+			secret: '',
 		},
 	})
 
@@ -111,9 +115,13 @@ export function SignInForm() {
 									Sign in.
 								</span>
 								<div className='flex items-center'>
-									<div className='flex flex-col mx-3'>
-										<span className='text-[10px]'>{userStreet}</span>
-										<span className='text-[12px] font-bold'>{userCity}</span>
+									<div className='flex flex-col mx-3 p-0'>
+										<span className='text-[10px] leading-tightf'>
+											{userStreet}
+										</span>
+										<span className='text-[12px] font-bold leading-tight'>
+											{userCity}
+										</span>
 									</div>
 									<Loader />
 								</div>
@@ -143,6 +151,23 @@ export function SignInForm() {
 										<FormControl>
 											<Input
 												placeholder='Password'
+												{...field}
+												type='password'
+											/>
+										</FormControl>
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+
+							<FormField
+								control={form.control}
+								name='secret'
+								render={({ field }) => (
+									<FormItem>
+										<FormControl>
+											<Input
+												placeholder='Secret key'
 												{...field}
 												type='password'
 											/>
