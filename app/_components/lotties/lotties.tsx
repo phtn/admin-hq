@@ -2,6 +2,7 @@ import Lottie, { Options } from 'react-lottie'
 import globe from '../../../public/lotties/globe.json'
 import orb from '../../../public/lotties/orb.json'
 import greenCheck from '../../../public/lotties/green-check.json'
+import warning from '../../../public/lotties/warning.json'
 
 export const SmallLoader = (options: Omit<Options, 'animationData'>) => {
 	return (
@@ -9,6 +10,18 @@ export const SmallLoader = (options: Omit<Options, 'animationData'>) => {
 			<Lottie
 				options={{ ...options, autoplay: true, animationData: globe }}
 				style={{ height: 64, width: 64 }}
+				speed={1}
+			/>
+		</div>
+	)
+}
+
+export const BigLoader = (options: Omit<Options, 'animationData'>) => {
+	return (
+		<div>
+			<Lottie
+				options={{ ...options, autoplay: true, animationData: globe }}
+				style={{ height: 128, width: 128 }}
 				speed={1}
 			/>
 		</div>
@@ -32,6 +45,18 @@ export const GreenCheck = (options: Omit<Options, 'animationData'>) => {
 		<div>
 			<Lottie
 				options={{ ...options, autoplay: true, animationData: greenCheck }}
+				style={{ height: 24, width: 24 }}
+				speed={1}
+			/>
+		</div>
+	)
+}
+
+export const Warning = (options: Omit<Options, 'animationData'>) => {
+	return (
+		<div>
+			<Lottie
+				options={{ ...options, autoplay: true, animationData: warning }}
 				style={{ height: 24, width: 24 }}
 				speed={1}
 			/>

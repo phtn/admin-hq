@@ -21,6 +21,7 @@ import { map } from '@/app/_utils/helpers'
 import { authenticator } from './authenticator'
 import { type User } from 'firebase/auth'
 import { MapPinIcon } from 'lucide-react'
+import { useGeolocator } from '@/app/_utils/geolocator/geolocator'
 
 const formSchema = z.object({
 	email: z.string().email().min(1, {
@@ -33,10 +34,11 @@ const formSchema = z.object({
 
 export function SignInForm() {
 	const Context = useContext(GlobalContext)
-	const { geodata, geodataError, geodataLoading } = Context as GlobalCtx
+	const { geodata, geodataError, geodataLoading } = useGeolocator()
 	const [error, setError] = useState<Error>()
 	const [loading, setLoading] = useState(false)
 	const [userCity, setUserCity] = useState('')
+	const [userStreet, setUserStreet] = useState('')
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -49,14 +51,17 @@ export function SignInForm() {
 	function onSubmit(values: z.infer<typeof formSchema>) {
 		setLoading(true)
 		const onError = (error: Error) => {
-			// setError(error as Error)
 			toast(<span>{error.message}</span>)
+			setError(error)
+			setLoading(false)
 		}
+
 		const onResult = (value: User | Error) => {
 			if (Object.values(value)[2] === 'FirebaseError') {
-				toast(<span>unathorized</span>)
+				onError(value as Error)
 			} else {
-				toast(<span>Successful login</span>)
+				toast(<span>Successful login.</span>)
+
 				setLoading(false)
 			}
 		}
@@ -68,31 +73,25 @@ export function SignInForm() {
 		if (geodata) {
 			const features = geodata.features[0]
 			const city = features.properties.city
+			const street = features.properties.address_line1
 			setUserCity(city)
+			setUserStreet(street)
 		}
 		return () => {
 			setError(geodataError)
 		}
 	}, [geodata])
 
-	useEffect(
-		function getCity() {
+	useEffect(() => {
+		if (userCity) {
 			toast(
 				<div className='flex items-center'>
 					<MapPinIcon className='mr-3 h-4 stroke-[1px]' />
 					<span className='font-bold'>{userCity}</span>
-				</div>,
-				{
-					description: <span>desc</span>,
-				}
+				</div>
 			)
-		},
-		[userCity]
-	)
-
-	useEffect(() => {
-		toast(<span>{error?.message}</span>)
-	}, [error])
+		}
+	}, [userCity])
 
 	const Loader = useCallback(() => {
 		const options = map(<GreenCheck loop={false} />, <SmallLoader loop />)
@@ -111,7 +110,13 @@ export function SignInForm() {
 								<span className='flex text-lg text-stone-700 font-extrabold tracking-tighter '>
 									Sign in.
 								</span>
-								<Loader />
+								<div className='flex items-center'>
+									<div className='flex flex-col mx-3'>
+										<span className='text-[10px]'>{userStreet}</span>
+										<span className='text-[12px] font-bold'>{userCity}</span>
+									</div>
+									<Loader />
+								</div>
 							</div>
 							<FormField
 								control={form.control}

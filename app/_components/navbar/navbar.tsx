@@ -16,7 +16,7 @@ import {
 import { BrandContainer, Container, MenubarContainer } from './styled'
 import Lottie from 'react-lottie'
 import animationData from '../../../public/lotties/dark-logo.json'
-import { User } from '../user/user'
+import { MobileMenu } from '../menu/mobileMenu'
 import { GanttChartSquare, GemIcon, Users } from 'lucide-react'
 import Image from 'next/image'
 
@@ -165,7 +165,7 @@ export function Navbar() {
 		<Container>
 			<Brand />
 			<Menubar />
-			<User />
+			<MobileMenu />
 		</Container>
 	)
 }

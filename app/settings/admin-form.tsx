@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { getAuth, signOut } from 'firebase/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useFieldArray, useForm } from 'react-hook-form'
 import * as z from 'zod'
@@ -26,8 +27,9 @@ import {
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { toast } from 'sonner'
+import { db, firebase } from '@/lib/db'
 
-const profileFormSchema = z.object({
+const adminFormSchema = z.object({
 	username: z
 		.string()
 		.min(2, {
@@ -51,20 +53,22 @@ const profileFormSchema = z.object({
 		.optional(),
 })
 
-type ProfileFormValues = z.infer<typeof profileFormSchema>
+type AdminFormValues = z.infer<typeof adminFormSchema>
 
 // This can come from your database or API.
-const defaultValues: Partial<ProfileFormValues> = {
+const defaultValues: Partial<AdminFormValues> = {
 	bio: 'I own a computer.',
 	urls: [
-		{ value: 'https://shadcn.com' },
-		{ value: 'http://twitter.com/shadcn' },
+		{ value: 'https://comptrola.com' },
+		{ value: 'http://twitter.com/comptrolla' },
 	],
 }
 
-export function ProfileForm() {
-	const form = useForm<ProfileFormValues>({
-		resolver: zodResolver(profileFormSchema),
+const auth = getAuth(firebase)
+
+export function AdminForm() {
+	const form = useForm<AdminFormValues>({
+		resolver: zodResolver(adminFormSchema),
 		defaultValues,
 		mode: 'onChange',
 	})
@@ -74,8 +78,14 @@ export function ProfileForm() {
 		control: form.control,
 	})
 
-	function onSubmit(data: ProfileFormValues) {
+	function onSubmit(data: AdminFormValues) {
 		toast(<code>{JSON.stringify(data, null, 2)}</code>)
+	}
+
+	function handleSignOut() {
+		auth.signOut().then(() => {
+			toast(<span>You successfully signed out.</span>)
+		})
 	}
 
 	return (
@@ -91,7 +101,7 @@ export function ProfileForm() {
 							<FormLabel>Username</FormLabel>
 							<FormControl>
 								<Input
-									placeholder='shadcn'
+									placeholder='outsourcee'
 									{...field}
 								/>
 							</FormControl>
@@ -183,7 +193,14 @@ export function ProfileForm() {
 						Add URL
 					</Button>
 				</div>
-				<Button type='submit'>Update profile</Button>
+				<div className='flex'>
+					<Button type='submit'>Update profile</Button>
+					<Button
+						onClick={handleSignOut}
+						className='ml-3'>
+						Sign out
+					</Button>
+				</div>
 			</form>
 		</Form>
 	)

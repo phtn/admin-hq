@@ -1,4 +1,4 @@
-import { db } from '@/lib/db'
+import { db, firebase } from '@/lib/db'
 import {
 	User,
 	UserCredential,
@@ -12,7 +12,7 @@ type SignInProps = {
 }
 
 const authenticator = async ({ email, password }: SignInProps) => {
-	const auth = getAuth(db)
+	const auth = getAuth(firebase)
 
 	const onError = (error: Error) => error
 
