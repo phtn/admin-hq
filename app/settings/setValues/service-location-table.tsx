@@ -5,25 +5,25 @@ import { serviceLocationCol } from './columns'
 import { DataTable } from './data-table'
 import { ServiceLocation } from '@/app/types'
 import { useFetchConfig } from '@/app/_utils/hooks/useFetchConfig'
-import { Loader } from 'lucide-react'
+import { ServiceLocationTableProps } from './types'
 
-const ServiceLocationTable = () => {
+const ServiceLocationTable = ({
+	setSelectedItem,
+}: ServiceLocationTableProps) => {
 	const [data, setData] = useState<ServiceLocation[]>([])
-	const { config, configLoading } = useFetchConfig()
+	const { serviceLocations } = useFetchConfig()
 
 	useEffect(() => {
-		if (config) {
-			const serviceLocations = config?.serviceLocations
+		if (serviceLocations) {
 			setData(serviceLocations)
 		}
-	}, [config])
-
-	if (configLoading) <Loader className='h-6 animate-spin' />
+	}, [serviceLocations])
 
 	return (
 		<DataTable
 			columns={serviceLocationCol}
 			data={data}
+			setSelectedItem={setSelectedItem}
 		/>
 	)
 }

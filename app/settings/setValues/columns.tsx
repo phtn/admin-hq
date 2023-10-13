@@ -26,7 +26,7 @@ export const serviceLocationCol: ColumnDef<ServiceLocation>[] = [
 					checked={table.getIsAllPageRowsSelected()}
 					onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
 					aria-label='Select all'
-					className='self-center'
+					className='self-center text-stone-400'
 				/>
 			</div>
 		),

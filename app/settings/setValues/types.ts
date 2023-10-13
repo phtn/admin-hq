@@ -1,9 +1,11 @@
 import { ServiceLocation } from '@/app/types'
 import { Column, type ColumnDef } from '@tanstack/react-table'
+import { Dispatch, SetStateAction } from 'react'
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[]
 	data: TData[]
+	setSelectedItem: Dispatch<SetStateAction<TData | undefined>>
 }
 
 type ColNameProps = {
@@ -19,4 +21,20 @@ type InputFieldProps = {
 	placeholder: string
 }
 
-export type { ColNameProps, DataTableProps, InputFieldProps }
+type ServiceLocationTableProps = {
+	setSelectedItem: Dispatch<SetStateAction<ServiceLocation | undefined>>
+}
+
+type EditActionsProps = {
+	loading: boolean
+	isDirty: boolean
+	onClick: () => void
+}
+
+export type {
+	ColNameProps,
+	DataTableProps,
+	EditActionsProps,
+	InputFieldProps,
+	ServiceLocationTableProps,
+}

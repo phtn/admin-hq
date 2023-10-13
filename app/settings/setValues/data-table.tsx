@@ -18,11 +18,44 @@ import {
 } from '@/components/ui/table'
 import { DataTableProps } from './types'
 import { useState } from 'react'
-import { Looper } from '@/app/_components/lotties/lotties'
+import { Skeleton } from '@/components/ui/skeleton'
+import { ServiceLocation } from '@/app/types'
+
+type SkeletonCellProps = {
+	h: number
+	w?: number
+}
+
+const SkeletonCell = ({ h, w }: SkeletonCellProps) => (
+	<TableCell
+		colSpan={1}
+		className='my-4'>
+		<Skeleton className={`h-[${h}px] ${w ? 'w-[' + w + 'px]' : 'w-full'}`} />
+	</TableCell>
+)
+
+const Loading = ({ cols }: { cols: number }) => {
+	const cells = Array.from({ length: cols }, (_, i) => i)
+	return (
+		<TableRow>
+			<SkeletonCell
+				h={18}
+				w={18}
+			/>
+			{cells.map((i) => (
+				<SkeletonCell
+					key={i}
+					h={24}
+				/>
+			))}
+		</TableRow>
+	)
+}
 
 export function DataTable<TData, TValue>({
 	columns,
 	data,
+	setSelectedItem,
 }: DataTableProps<TData, TValue>) {
 	const [sorting, setSorting] = useState<SortingState>([])
 
@@ -37,6 +70,10 @@ export function DataTable<TData, TValue>({
 		},
 	})
 
+	const handleSelectItem = (item: TData) => () => {
+		setSelectedItem(item)
+	}
+
 	return (
 		<div className='border border-l-0 h-full'>
 			<Table>
@@ -44,7 +81,7 @@ export function DataTable<TData, TValue>({
 					{table.getHeaderGroups().map((headerGroup) => (
 						<TableRow
 							key={headerGroup.id}
-							className='hover:bg-stone-200/25'>
+							className='hover:bg-stone-200/25 dark:bg-stone-950'>
 							{headerGroup.headers.map((header) => {
 								return (
 									<TableHead
@@ -66,6 +103,7 @@ export function DataTable<TData, TValue>({
 					{table.getRowModel().rows?.length ? (
 						table.getRowModel().rows.map((row) => (
 							<TableRow
+								onClick={handleSelectItem(row.original)}
 								key={row.id}
 								data-state={row.getIsSelected() && 'selected'}>
 								{row.getVisibleCells().map((cell) => (
@@ -78,13 +116,14 @@ export function DataTable<TData, TValue>({
 							</TableRow>
 						))
 					) : (
-						<TableRow>
-							<TableCell
-								colSpan={columns.length}
-								className='h-24'>
-								<Looper data='globe' />
-							</TableCell>
-						</TableRow>
+						<>
+							<Loading cols={columns.length} />
+							<Loading cols={columns.length} />
+							<Loading cols={columns.length} />
+							<Loading cols={columns.length} />
+							<Loading cols={columns.length - 3} />
+							<Loading cols={columns.length - 4} />
+						</>
 					)}
 				</TableBody>
 			</Table>

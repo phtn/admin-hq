@@ -36,7 +36,10 @@ const InputField = <T,>(props: FieldProps<T>) => {
 			name={fieldName}
 			render={({ field }) => (
 				<FormItem>
-					<FormLabel children={label} />
+					<FormLabel
+						children={label}
+						className='uppercase text-xs font-bold text-muted-foreground'
+					/>
 					<FormControl>
 						<Input
 							placeholder={placeholder}

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
-import { type DocumentSnapshot, doc, getDoc } from 'firebase/firestore'
-import useAuth from './useAuth'
+import { type DocumentSnapshot, doc, onSnapshot } from 'firebase/firestore'
 import { AdminConfig, ServiceLocation } from '@/app/types'
 import { db } from '@/lib/db'
 
@@ -15,9 +14,6 @@ const useFetchConfig = () => {
 	const [serviceLocations, setServiceLocations] = useState<ServiceLocation[]>(
 		[]
 	)
-
-	const { userData, authLoading } = useAuth()
-	const uid = userData?.uid
 
 	const Err = (error: Error) => {
 		setConfigError(error)
@@ -37,7 +33,7 @@ const useFetchConfig = () => {
 	useEffect(() => {
 		const docRef = doc(db, collectionPath, docId)
 		setConfigLoading(true)
-		getDoc(docRef).then(Ok, Err)
+		onSnapshot(docRef, Ok, Err)
 	}, [])
 
 	return { admins, config, configError, configLoading, serviceLocations }
