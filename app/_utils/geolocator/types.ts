@@ -7,6 +7,7 @@ interface ReverseGeocodeResult {
 		plus_code: string
 	}
 }
+
 interface Features {
 	type: string
 	properties: Properties
@@ -82,4 +83,4 @@ type PinPoint = {
 	country: string
 }
 
-export type { ReverseGeocodeResult, Coordinates, PinPoint }
+export type { ReverseGeocodeResult, Coordinates, PinPoint, Properties }

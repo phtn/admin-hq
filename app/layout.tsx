@@ -1,10 +1,14 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import localFont from 'next/font/local'
 import { Navbar } from './_components/navbar/navbar'
 import { Toaster } from 'sonner'
+import { ThemeProvider } from '@/components/theme-provider'
 
-const inter = Inter({ subsets: ['latin'] })
+const Onest = localFont({
+	src: '../public/Onest-vfw.ttf',
+	display: 'auto',
+})
 
 export const metadata: Metadata = {
 	title: 'Create Next App',
@@ -18,10 +22,15 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang='en'>
-			<body className={inter.className}>
-				<Navbar />
-				{children}
-				<Toaster />
+			<body className={Onest.className}>
+				<ThemeProvider
+					attribute='class'
+					defaultTheme='system'
+					enableSystem>
+					<Navbar />
+					{children}
+					<Toaster />
+				</ThemeProvider>
 			</body>
 		</html>
 	)

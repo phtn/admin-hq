@@ -1,10 +1,6 @@
-'use client'
-import Image from 'next/image'
-
 import { Separator } from '@/components/ui/separator'
 import { SidebarNav } from './_components/sidebar_nav'
-import ProtectedRoute from '../_components/protectedRoutes'
-import { Settings2Icon, SettingsIcon } from 'lucide-react'
+import { SettingsIcon } from 'lucide-react'
 
 const sidebarNavItems = [
 	{
@@ -17,15 +13,15 @@ const sidebarNavItems = [
 	},
 	{
 		title: 'Set Values',
-		href: '/examples/forms/appearance',
+		href: '/settings/setValues',
 	},
 	{
 		title: 'Notifications',
-		href: '/examples/forms/notifications',
+		href: '/settings/notifications',
 	},
 	{
 		title: 'Display',
-		href: '/examples/forms/display',
+		href: '/settings/display',
 	},
 ]
 
@@ -35,23 +31,22 @@ interface SettingsLayoutProps {
 
 export default function SettingsLayout({ children }: SettingsLayoutProps) {
 	return (
-		<ProtectedRoute>
-			<div className='md:hidden'></div>
-			<div className='hidden space-y-0 md:block'>
+		<>
+			<div className='hidden space-y-0 sm:block bg-transparent'>
 				<div className='space-y-0.5 flex items-center my-4 mx-[20px]'>
 					<SettingsIcon className='h-[24px] text-stone-500 stroke-1' />
 					<h2 className='text-lg font-bold tracking-tight mx-4'>Settings</h2>
 				</div>
-				<Separator className='' />
-				<div className='flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0'>
+				<Separator />
+				<div className='flex flex-col lg:flex-row'>
 					<aside className='lg:w-1/5 border-r'>
 						<SidebarNav items={sidebarNavItems} />
 					</aside>
-					<div className='flex-1 lg:max-w-2xl px-1 py-8 border-r pr-10'>
+					<div className='flex w-full border-r justify-center p-6'>
 						{children}
 					</div>
 				</div>
 			</div>
-		</ProtectedRoute>
+		</>
 	)
 }

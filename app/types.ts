@@ -22,6 +22,15 @@ type Log = {
 	value: string
 }
 
+type ServiceLocation = {
+	createdAt: number
+	id: number
+	region: string
+	value: string
+	updatedAt: number
+	user: string
+}
+
 interface AdminConfig {
 	admins: string[]
 	businessSizes: IdValuePair[]
@@ -30,8 +39,8 @@ interface AdminConfig {
 	industries: IdValuePair[]
 	revenueRanges: IdValuePair[]
 	taxRegTypes: IdValuePair[]
-	serviceLocation: IdValuePair[]
+	serviceLocations: ServiceLocation[]
 	logs: Log[]
 }
 
-export type { GlobalCtx, AdminConfig }
+export type { GlobalCtx, AdminConfig, ServiceLocation }

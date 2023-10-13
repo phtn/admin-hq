@@ -3,9 +3,10 @@ import {
 	DocumentSnapshot,
 	arrayUnion,
 	doc,
+	getDoc,
 	updateDoc,
 } from 'firebase/firestore'
-import { AdminConfig } from '../types'
+import { AdminConfig, ServiceLocation } from '../types'
 import { toast } from 'sonner'
 
 type DashboardAccessUpdateParams = {
@@ -13,21 +14,22 @@ type DashboardAccessUpdateParams = {
 	status: boolean
 }
 
+const collectionPath = process.env.NEXT_PUBLIC_ADMIN_COLLECTION as string
+const docId = process.env.NEXT_PUBLIC_ADMIN_DOC_ID as string
+
 const POST_DashboardAccessUpdate = ({
 	uid,
 	status,
 }: DashboardAccessUpdateParams) => {
-	const collectionPath = process.env.NEXT_PUBLIC_ADMIN_COLLECTION as string
-	const docId = process.env.NEXT_PUBLIC_ADMIN_DOC_ID as string
 	const docRef = doc(db, collectionPath, docId)
 	const access = status ? 'Access Enabled' : 'Access Disabled'
 
 	const Err = (error: Error) => {
-		toast(`⚠️ Error updating: ${error.message}`)
+		toast(`⚠️️ Error updating: ${error.message}`)
 	}
 
 	const Ok = () => {
-		toast(`✓  Update: ${access}`)
+		toast(`✅  Update: ${access}`)
 	}
 
 	const payload = {
@@ -45,4 +47,27 @@ const POST_DashboardAccessUpdate = ({
 	}).then(Ok, Err)
 }
 
-export { POST_DashboardAccessUpdate }
+const POST_AddServiceLocation = async (payload: Partial<ServiceLocation>) => {
+	const docRef = doc(db, collectionPath, docId)
+
+	const count = await getDoc(docRef).then((doc) => doc.data.length)
+
+	const Err = (error: Error) => {
+		toast(`⚠️️ Error while add: ${error.message}`)
+	}
+
+	const Ok = () => {
+		toast(`✅  Add Successful`)
+	}
+
+	const serviceLocations = arrayUnion({
+		...payload,
+		id: count - 1,
+		createdAt: Date.now(),
+		updatedAt: Date.now(),
+	})
+
+	return updateDoc(docRef, { serviceLocations }).then(Ok, Err)
+}
+
+export { POST_DashboardAccessUpdate, POST_AddServiceLocation }

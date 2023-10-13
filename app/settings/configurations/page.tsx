@@ -1,36 +1,17 @@
 'use client'
 import { POST_DashboardAccessUpdate } from '@/app/_api/post'
-import { map } from '@/app/_utils/helpers'
 import { useFetchConfig } from '@/app/_utils/hooks/useFetchConfig'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import {
-	Form,
-	FormControl,
-	FormDescription,
-	FormField,
-	FormItem,
-	FormLabel,
-} from '@/components/ui/form'
-import { Switch } from '@/components/ui/switch'
+import { Form } from '@/components/ui/form'
 import { firebase } from '@/lib/db'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { getAuth } from 'firebase/auth'
-import { Loader, Settings2Icon } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import {
-	ConfigHeader,
-	DisabledBadge,
-	EnabledBadge,
-	LoadingBadge,
-	Submit,
-	SwitchField,
-	UnsavedBadge,
-} from './components'
+import { ConfigHeader, SwitchField } from './components'
 import { FormContainer } from './styled'
 import { FieldProps } from './types'
+import { Submit } from '../_components/form_components'
 
 const configFormSchema = z.object({
 	dashboard_access: z.boolean(),
@@ -97,7 +78,7 @@ const Configurations = () => {
 	)
 
 	return (
-		<div>
+		<div className='w-full'>
 			<ConfigHeader />
 			<FormContainer>
 				<Form {...form}>
@@ -115,7 +96,7 @@ const Configurations = () => {
 						/>
 						<Submit
 							status={!isDirty}
-							label='Save'
+							label='Save changes'
 							loading={updateLoading}
 						/>
 					</form>

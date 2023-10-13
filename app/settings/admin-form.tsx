@@ -64,8 +64,6 @@ const defaultValues: Partial<AdminFormValues> = {
 	],
 }
 
-const auth = getAuth(firebase)
-
 export function AdminForm() {
 	const form = useForm<AdminFormValues>({
 		resolver: zodResolver(adminFormSchema),
@@ -80,12 +78,6 @@ export function AdminForm() {
 
 	function onSubmit(data: AdminFormValues) {
 		toast(<code>{JSON.stringify(data, null, 2)}</code>)
-	}
-
-	function handleSignOut() {
-		auth.signOut().then(() => {
-			toast(<span>You successfully signed out.</span>)
-		})
 	}
 
 	return (
@@ -191,14 +183,6 @@ export function AdminForm() {
 						className='mt-2'
 						onClick={() => append({ value: '' })}>
 						Add URL
-					</Button>
-				</div>
-				<div className='flex'>
-					<Button type='submit'>Update profile</Button>
-					<Button
-						onClick={handleSignOut}
-						className='ml-3'>
-						Sign out
 					</Button>
 				</div>
 			</form>

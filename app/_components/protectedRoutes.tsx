@@ -1,55 +1,42 @@
 'use client'
 import { ReactNode, useCallback, useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import useAuth from '../_utils/hooks/useAuth'
-import { BigLoader } from './lotties/lotties'
-import { useFetchConfig } from '../_utils/hooks/useFetchConfig'
+import { Looper } from './lotties/lotties'
 import { map } from '../_utils/helpers'
 import { Unauthorized } from './unauthorized/unauthorized'
+import { SignInForm } from './signin/signInForm'
+import { VerifyAccess } from './signin/verifyAccess'
 
 const ProtectedRoute = ({ children }: { children: ReactNode }) => {
-	const router = useRouter()
 	const { userData, authLoading } = useAuth()
-	const { config, configLoading } = useFetchConfig()
 
-	const [uid, setUid] = useState<string>()
-	const [admins, setAdmins] = useState<string[]>([])
-
-	useEffect(() => {
-		if (userData) {
-			setUid(userData?.uid)
-		}
-		if (config) {
-			setAdmins(config?.admins)
-		}
-
-		if (!authLoading && !userData) {
-			router.push('/')
-		}
-	}, [userData, authLoading, config, configLoading, router])
+	const authorization = VerifyAccess(userData?.uid as string)
 
 	const AccessOptions = useCallback(() => {
-		const authorization = admins.includes(uid as string)
 		const options = map(<>{children}</>, <Unauthorized />)
-		return <>{options.get(authorization)}</>
-	}, [userData, config, admins, uid])
+		return <>{options.get(authorization as boolean)}</>
+	}, [userData, authorization])
 
-	const Loading = useCallback(() => {
-		const loading = authLoading && configLoading && !uid && !admins.length
+	const AuthOptions = useCallback(() => {
+		const isAuth = userData !== null
+		const options = map(<AccessOptions />, <SignInForm />)
+		return <>{options.get(isAuth)}</>
+	}, [userData])
+
+	const Initial = useCallback(() => {
 		const options = map(
 			<div className='flex h-64 items-center justify-center'>
-				<BigLoader loop />
+				<Looper
+					md
+					data='globe'
+				/>
 			</div>,
-			<AccessOptions />
+			<AuthOptions />
 		)
-		return <>{options.get(loading)}</>
-	}, [authLoading, configLoading, uid, admins, userData, config])
+		return <>{options.get(authLoading)}</>
+	}, [authLoading, authorization, userData])
 
-	return (
-		<>
-			<Loading />
-		</>
-	)
+	return <Initial />
 }
 
 export default ProtectedRoute

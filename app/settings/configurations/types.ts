@@ -29,12 +29,6 @@ type StatusProps = {
 	status: boolean
 }
 
-type SubmitActionProps = {
-	status: boolean
-	label: string
-	loading: boolean
-}
-
 type UnsavedStatusProps = StatusProps & {
 	isDirty: boolean
 }
@@ -44,6 +38,5 @@ export type {
 	FieldHeaderProps,
 	InitialStatusProps,
 	StatusProps,
-	SubmitActionProps,
 	UnsavedStatusProps,
 }

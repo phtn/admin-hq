@@ -1,5 +1,5 @@
 import { Badge } from '@/components/ui/badge'
-import { LoaderIcon, Settings2Icon } from 'lucide-react'
+import { LoaderIcon } from 'lucide-react'
 import { ReactElement } from 'react'
 import { FieldItem, FieldLabel, HeaderTitle, Tweak } from './styled'
 import {
@@ -7,19 +7,10 @@ import {
 	FieldProps,
 	InitialStatusProps,
 	StatusProps,
-	SubmitActionProps,
-	UnsavedStatusProps,
 } from './types'
-import {
-	FormControl,
-	FormDescription,
-	FormField,
-	FormItem,
-	FormLabel,
-} from '@/components/ui/form'
+import { FormControl, FormDescription, FormField } from '@/components/ui/form'
 import { Switch } from '@/components/ui/switch'
 import { map } from '@/app/_utils/helpers'
-import { ControllerRenderProps, FieldValues } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
 
 type HeaderProps = {
@@ -148,31 +139,11 @@ const SwitchField = ({
 	/>
 )
 
-const SaveOptions = ({ label, loading }: Partial<SubmitActionProps>) => {
-	const options = map(
-		<LoaderIcon className='mr-2 h-4 w-4 animate-spin' />,
-		<p>{label}</p>
-	)
-	return <>{options.get(loading as boolean)}</>
-}
-
-const Submit = ({ status, label, loading }: SubmitActionProps) => (
-	<Button
-		type='submit'
-		disabled={status}>
-		<SaveOptions
-			label={label}
-			loading={loading}
-		/>
-	</Button>
-)
-
 export {
 	ConfigHeader,
 	EnabledBadge,
 	DisabledBadge,
 	LoadingBadge,
 	UnsavedBadge,
-	Submit,
 	SwitchField,
 }

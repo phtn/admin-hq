@@ -1,78 +1,61 @@
-import Lottie, { Options } from 'react-lottie'
+import { LottieComponentProps, useLottie } from 'lottie-react'
 import globe from '../../../public/lotties/globe.json'
 import orb from '../../../public/lotties/orb.json'
 import greenCheck from '../../../public/lotties/green-check.json'
 import warning from '../../../public/lotties/warning.json'
 import tesseract from '../../../public/lotties/dark-logo.json'
+import {
+	LottieFile,
+	LottieFileProps,
+	LottieSize,
+	LottieSizeValue,
+} from './types'
+import { CSSProperties } from 'react'
 
-export const Tesseract = (options: Omit<Options, 'animationData'>) => {
-	return (
-		<div>
-			<Lottie
-				options={{ ...options, autoplay: true, animationData: tesseract }}
-				style={{ height: 64, width: 64 }}
-				speed={0.01}
-			/>
-		</div>
-	)
-}
+const lotties: LottieFile[] = [
+	{ name: 'globe', file: globe },
+	{ name: 'orb', file: orb },
+	{ name: 'greenCheck', file: greenCheck },
+	{ name: 'warning', file: warning },
+	{ name: 'tesseract', file: tesseract },
+]
 
-export const SmallLoader = (options: Omit<Options, 'animationData'>) => {
-	return (
-		<div>
-			<Lottie
-				options={{ ...options, autoplay: true, animationData: globe }}
-				style={{ height: 64, width: 64 }}
-				speed={1}
-			/>
-		</div>
-	)
-}
+const sizeOptionsMap: Map<LottieSize, LottieSizeValue> = new Map([
+	['xxs', 10],
+	['xs', 16],
+	['sm', 32],
+	['md', 96],
+	['lg', 64],
+	['xl', 72],
+	['xxl', 96],
+])
 
-export const BigLoader = (options: Omit<Options, 'animationData'>) => {
-	return (
-		<div>
-			<Lottie
-				options={{ ...options, autoplay: true, animationData: globe }}
-				style={{ height: 128, width: 128 }}
-				speed={1}
-			/>
-		</div>
-	)
-}
+export const Looper = (props: LottieFileProps) => {
+	const { data, loop } = props
 
-export const OrbLoader = (options: Omit<Options, 'animationData'>) => {
-	return (
-		<div>
-			<Lottie
-				options={{ ...options, autoplay: true, animationData: orb }}
-				style={{ height: 32, width: 32 }}
-				speed={1}
-			/>
-		</div>
-	)
-}
+	const size = Object.keys(props).find(
+		(prop) => prop in sizeOptionsMap
+	) as LottieSize
 
-export const GreenCheck = (options: Omit<Options, 'animationData'>) => {
-	return (
-		<div>
-			<Lottie
-				options={{ ...options, autoplay: true, animationData: greenCheck }}
-				style={{ height: 24, width: 24 }}
-				speed={1}
-			/>
-		</div>
-	)
-}
+	const defaultSize: LottieSizeValue = 64
 
-export const Warning = (options: Omit<Options, 'animationData'>) => {
-	return (
-		<div>
-			<Lottie
-				options={{ ...options, autoplay: true, animationData: warning }}
-				style={{ height: 32, width: 32 }}
-				speed={1}
-			/>
-		</div>
-	)
+	const sizeValue: LottieSizeValue = size
+		? (sizeOptionsMap.get(size) as LottieSizeValue)
+		: defaultSize
+
+	const style: CSSProperties = {
+		height: sizeValue,
+	}
+
+	const animation = lotties.find((file) => file.name === data)
+	const animationData = animation?.file
+
+	const options: LottieComponentProps = {
+		animationData,
+		loop,
+	}
+
+	const { View } = useLottie(options, style)
+
+	return <>{View}</>
 }

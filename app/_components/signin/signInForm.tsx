@@ -12,16 +12,14 @@ import { Input } from '@/components/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { GreenCheck, SmallLoader } from '../lotties/lotties'
-import { useCallback, useContext, useEffect, useState } from 'react'
-import { GlobalContext } from '@/app/page'
-import { GlobalCtx } from '@/app/types'
+import { useCallback, useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { map } from '@/app/_utils/helpers'
 import { authenticator } from './authenticator'
 import { type User } from 'firebase/auth'
 import { MapPinIcon } from 'lucide-react'
 import { useGeolocator } from '@/app/_utils/geolocator/geolocator'
+import { Looper } from '../lotties/lotties'
 
 const formSchema = z.object({
 	email: z.string().email().min(1, {
@@ -36,7 +34,6 @@ const formSchema = z.object({
 })
 
 export function SignInForm() {
-	const Context = useContext(GlobalContext)
 	const { geodata, geodataError, geodataLoading } = useGeolocator()
 	const [error, setError] = useState<Error>()
 	const [loading, setLoading] = useState(false)
@@ -84,7 +81,7 @@ export function SignInForm() {
 		return () => {
 			setError(geodataError)
 		}
-	}, [geodata])
+	}, [])
 
 	useEffect(() => {
 		if (userCity) {
@@ -98,7 +95,16 @@ export function SignInForm() {
 	}, [userCity])
 
 	const Loader = useCallback(() => {
-		const options = map(<GreenCheck loop={false} />, <SmallLoader loop />)
+		const options = map(
+			<Looper
+				xs
+				data='greenCheck'
+			/>,
+			<Looper
+				md
+				data='globe'
+			/>
+		)
 		return <>{options.get(!loading)}</>
 	}, [loading])
 
