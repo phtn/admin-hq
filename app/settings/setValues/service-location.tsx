@@ -61,6 +61,7 @@ const ServiceLocationPanel = () => {
 	} = form
 
 	useEffect(() => {
+		console.log(selectedItem?.id)
 		if (selectedItem) {
 			setEditMode(true)
 			reset({ region: selectedItem.region, city: selectedItem.value })
@@ -68,6 +69,7 @@ const ServiceLocationPanel = () => {
 	}, [selectedItem])
 
 	const onSubmit = (data: ServiceLocationFormValues) => {
+		console.log('click')
 		setLoading(true)
 		const uid = auth.currentUser?.uid
 		const id = selectedItem?.id
@@ -76,7 +78,7 @@ const ServiceLocationPanel = () => {
 
 		if (isDirty && !editMode) {
 			POST_AddServiceLocation({ value, region, user: uid }).then(() => {
-				reset({ city: '' })
+				reset({ city: '', region: 'Metro Manila' })
 				setLoading(false)
 			})
 		} else if (isDirty && editMode) {
@@ -84,16 +86,24 @@ const ServiceLocationPanel = () => {
 				uid: uid as string,
 				payload: { id, value, region },
 			}).then(() => {
-				reset({ city: '' })
+				reset({ city: '', region: 'Metro Manila' })
 				setLoading(false)
 				setEditMode(false)
 			})
+		} else {
+			setLoading(false)
 		}
 	}
 
 	const handleDeleteRow = () => {
 		POST_DeleteServiceLocation(selectedItem?.id as number)
+		reset({ city: '', region: 'Metro Manila' })
+		setLoading(false)
 	}
+
+	useEffect(() => {
+		console.log(isDirty)
+	}, [isDirty])
 
 	const Field = useCallback(
 		(props: FieldProps<ServiceLocationFormValues>) => <InputField {...props} />,
@@ -108,13 +118,13 @@ const ServiceLocationPanel = () => {
 				onClick={handleDeleteRow}
 			/>,
 			<Submit
-				status={!isDirty}
+				status={isDirty}
 				label={'Add Item'}
 				loading={loading}
 			/>
 		)
 		return <>{options.get(editMode)}</>
-	}, [editMode, isDirty])
+	}, [editMode, isDirty, loading])
 
 	return (
 		<TabsContent value='serviceLocations'>

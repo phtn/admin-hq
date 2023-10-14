@@ -70,10 +70,10 @@ export const serviceLocationCol: ColumnDef<ServiceLocation>[] = [
 		),
 	},
 	{
-		accessorKey: 'user',
+		accessorKey: 'id',
 		header: ({ column }) => (
 			<ColName
-				name='User'
+				name='ID'
 				column={column}
 			/>
 		),

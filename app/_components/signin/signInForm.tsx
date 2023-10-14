@@ -99,6 +99,7 @@ export function SignInForm() {
 			<Looper
 				xs
 				data='greenCheck'
+				loop={false}
 			/>,
 			<Looper
 				md
@@ -129,7 +130,9 @@ export function SignInForm() {
 											{userCity}
 										</span>
 									</div>
-									<Loader />
+									<div className='h-10 w-10 flex justify-center items-center'>
+										<Loader />
+									</div>
 								</div>
 							</div>
 							<FormField
@@ -142,6 +145,7 @@ export function SignInForm() {
 												placeholder='User ID'
 												{...field}
 												type='email'
+												className='w-full'
 											/>
 										</FormControl>
 										<FormMessage />
@@ -159,6 +163,7 @@ export function SignInForm() {
 												placeholder='Password'
 												{...field}
 												type='password'
+												className='w-full'
 											/>
 										</FormControl>
 										<FormMessage />
@@ -176,6 +181,7 @@ export function SignInForm() {
 												placeholder='Secret key'
 												{...field}
 												type='password'
+												className='w-full'
 											/>
 										</FormControl>
 										<FormMessage />

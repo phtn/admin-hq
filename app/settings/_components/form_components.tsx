@@ -68,7 +68,7 @@ const SaveOptions = ({ label, loading }: Partial<SubmitActionProps>) => {
 const Submit = ({ status, label, loading }: SubmitActionProps) => (
 	<Button
 		type='submit'
-		disabled={status}
+		disabled={!status}
 		className='w-full'>
 		<SaveOptions
 			label={label}

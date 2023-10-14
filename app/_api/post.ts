@@ -49,7 +49,10 @@ const POST_DashboardAccessUpdate = ({
 const POST_AddServiceLocation = async (payload: Partial<ServiceLocation>) => {
 	const docRef = doc(db, collectionPath, docId)
 
-	const count = await getDoc(docRef).then((doc) => doc.data.length)
+	const count = await getDoc(docRef).then((doc) => {
+		const data = doc.data() as AdminConfig
+		return data.serviceLocations.length
+	})
 
 	const Err = (error: Error) => {
 		toast(`⚠️️ Error while add: ${error.message}`)
@@ -61,7 +64,7 @@ const POST_AddServiceLocation = async (payload: Partial<ServiceLocation>) => {
 
 	const serviceLocations = arrayUnion({
 		...payload,
-		id: count - 1,
+		id: count + 1,
 		createdAt: Date.now(),
 		updatedAt: Date.now(),
 	})
